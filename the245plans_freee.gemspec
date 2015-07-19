@@ -9,15 +9,18 @@ Gem::Specification.new do |s|
   s.version     = The245plansFreee::VERSION
   s.authors     = ["Hironobu Nishikokura"]
   s.email       = ["nishiko@mindia.jp"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of The245plansFreee."
-  s.description = "TODO: Description of The245plansFreee."
+  s.homepage    = "https://github.com/pandeiro245/245plans-freee"
+  s.summary     = "this is for 245plans to integrate with freee"
+  s.description = "this is for 245plans to integrate with freee"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 4.2.3"
+  s.add_dependency "rails", "~> 4.2.2"
 
-  s.add_development_dependency "sqlite3"
+  s.add_development_dependency 'oauth2'
+  s.add_development_dependency 'faraday'
+  s.add_development_dependency 'faraday_middleware'
+  s.add_development_dependency 'httpauth'
 end
