@@ -13,3 +13,10 @@ gemspec
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
 
+gem 'haml'
+
+gem 'oauth2'
+gem 'faraday'
+gem 'faraday_middleware'
+gem 'httpauth'
+

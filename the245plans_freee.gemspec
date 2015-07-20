@@ -19,8 +19,8 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.2.2"
 
-  s.add_development_dependency 'oauth2'
-  s.add_development_dependency 'faraday'
-  s.add_development_dependency 'faraday_middleware'
-  s.add_development_dependency 'httpauth'
+  s.add_dependency 'oauth2'
+  s.add_dependency 'faraday'
+  s.add_dependency 'faraday_middleware'
+  s.add_dependency 'httpauth'
 end
