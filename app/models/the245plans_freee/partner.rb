@@ -1,6 +1,4 @@
-require 'app/models/the245plans_freee/concerns/freee_sync'
-# TODO
-# cannot load such file -- app/models/the245plans_freee/concerns/freee_sync
+require_dependency "the245plans_freee/concerns/freee_sync"
 
 module The245plansFreee
   class Partner < ActiveRecord::Base
