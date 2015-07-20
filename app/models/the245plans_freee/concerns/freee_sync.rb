@@ -18,7 +18,7 @@ module The245plansFreee
 
         def items offset = 0
           company_id = ENV['FREEE_COMPANY_ID']
-          Freee.fetch(self, {
+          The245plansFreee::Freee.fetch(self, {
             company_id: company_id,
             offset: offset
           })
@@ -30,7 +30,9 @@ module The245plansFreee
           )
           params = {}
           self.column_names.each do |param|
-            params[param.to_sym] = item[param]
+            unless [:created_at, :updated_at].include?(param.to_sym)
+              params[param.to_sym] = item[param]
+            end
           end
           item2.update(
             params

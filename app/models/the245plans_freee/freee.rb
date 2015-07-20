@@ -1,7 +1,7 @@
 module The245plansFreee
   class Freee
     def self.check(model, params=[])
-      plural = model.to_s.underscore.pluralize
+      plural = model.to_s.split('::').last.underscore.pluralize
       url = "/api/1/#{plural}.json?limit=100"
       params.each do |key, val|
         url += "&#{key}=#{val}"
