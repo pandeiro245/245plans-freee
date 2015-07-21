@@ -1,4 +1,4 @@
-module The245plansFreee
+module HareruyaFreee
   class ApplicationController < ActionController::Base
   end
 end

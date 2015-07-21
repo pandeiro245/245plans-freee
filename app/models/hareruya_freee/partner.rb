@@ -1,10 +1,10 @@
-require_dependency "the245plans_freee/concerns/freee_sync"
+require_dependency "hareruya_freee/concerns/freee_sync"
 
-module The245plansFreee
+module HareruyaFreee
   class Partner < ActiveRecord::Base
     has_many :deals, ->{order('due_date desc')}
 
-    include The245plansFreee::FreeeSync
+    include HareruyaFreee::FreeeSync
 
     def amount
       deals.map{|d| d.amount}.reduce(:+)

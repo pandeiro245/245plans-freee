@@ -1,17 +1,17 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "the245plans_freee/version"
+require "hareruya_freee/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "the245plans_freee"
-  s.version     = The245plansFreee::VERSION
+  s.name        = "hareruya_freee"
+  s.version     = HareruyaFreee::VERSION
   s.authors     = ["Hironobu Nishikokura"]
   s.email       = ["nishiko@mindia.jp"]
-  s.homepage    = "https://github.com/pandeiro245/245plans-freee"
-  s.summary     = "this is for 245plans to integrate with freee"
-  s.description = "this is for 245plans to integrate with freee"
+  s.homepage    = "https://github.com/pandeiro245/hareruya-freee"
+  s.summary     = "this is for hareruya to integrate with freee"
+  s.description = "this is for hareruya to integrate with freee"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]

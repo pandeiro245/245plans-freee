@@ -1,4 +1,4 @@
-module The245plansFreee
+module HareruyaFreee
   module FreeeSync
     extend ActiveSupport::Concern
 
@@ -18,7 +18,7 @@ module The245plansFreee
 
         def items offset = 0
           company_id = ENV['FREEE_COMPANY_ID']
-          The245plansFreee::Freee.fetch(self, {
+          HareruyaFreee::Freee.fetch(self, {
             company_id: company_id,
             offset: offset
           })

@@ -3,7 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 
 Bundler.require(*Rails.groups)
-require "the245plans_freee"
+require "hareruya_freee"
 
 module Dummy
   class Application < Rails::Application

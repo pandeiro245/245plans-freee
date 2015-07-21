@@ -1,7 +1,11 @@
 PATH
   remote: .
   specs:
-    the245plans_freee (0.0.1)
+    hareruya_freee (0.0.1)
+      faraday
+      faraday_middleware
+      httpauth
+      oauth2
       rails (~> 4.2.2)
 
 GEM
@@ -122,9 +126,9 @@ DEPENDENCIES
   faraday
   faraday_middleware
   haml
+  hareruya_freee!
   httpauth
   oauth2
-  the245plans_freee!
 
 BUNDLED WITH
    1.10.5

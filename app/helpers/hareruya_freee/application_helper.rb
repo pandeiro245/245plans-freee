@@ -1,4 +1,4 @@
-module The245plansFreee
+module HareruyaFreee
   module ApplicationHelper
   end
 end

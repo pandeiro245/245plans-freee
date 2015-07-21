@@ -1,4 +1,4 @@
-module The245plansFreee
+module HareruyaFreee
   class Freee
     def self.check(model, params=[])
       plural = model.to_s.split('::').last.underscore.pluralize
