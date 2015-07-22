@@ -9,6 +9,7 @@ module HareruyaFreee
 
     def show
       @partner = Partner.find(params[:id])
+      render layout: 'application'
     end
   end
 end

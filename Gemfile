@@ -20,3 +20,4 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'httpauth'
 
+gem 'rspec-rails'

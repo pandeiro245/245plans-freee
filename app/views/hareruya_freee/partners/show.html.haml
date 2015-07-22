@@ -1,16 +1,16 @@
 %h1= "#{@partner.name} (#{@partner.amount})円"
 
--#- if @partner.deals.present?
--#  %table.table
--#    %tr
--#      - Deal.column_names.each do |column_name|
--#        %th=column_name
--#    - @partner.deals.each do |deal|
--#      %tr
--#        - Deal.column_names.each do |column_name|
--#          %td
--#            - if column_name == 'details'
--#              = freee_details deal.details
--#            - else
--#              = deal.send(column_name)
--#          
+- if @partner.deals.present?
+  %table.table
+    %tr
+      - HareruyaFreee::Deal.column_names.each do |column_name|
+        %th=column_name
+    - @partner.deals.each do |deal|
+      %tr
+        - HareruyaFreee::Deal.column_names.each do |column_name|
+          %td
+            - if column_name == 'details'
+              = freee_details deal.details
+            - else
+              = deal.send(column_name)
+          

@@ -5,7 +5,7 @@ module HareruyaFreee
     included do
       class << self
         def sync
-          self.delete_all
+          #self.delete_all
           items = self.items
           if items.count == 100
             offset = 100
@@ -31,7 +31,14 @@ module HareruyaFreee
           params = {}
           self.column_names.each do |param|
             unless [:created_at, :updated_at].include?(param.to_sym)
-              params[param.to_sym] = item[param]
+              if param.match(/^hareruya_freee_/)
+                val = item[param.gsub(/^hareruya_freee_/, '')]
+              else
+                val = item[param]
+              end
+              puts "key is #{param}"
+              puts "val is #{val}"
+              params[param.to_sym] = val
             end
           end
           item2.update(

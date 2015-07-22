@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  issue_date: 2015-07-21
+  due_date: 2015-07-21
+  amount: 1
+  due_amount: 1
+  type: 
+  partner_id: 
+  ref_number: MyString
+  info: MyText
+
+two:
+  issue_date: 2015-07-21
+  due_date: 2015-07-21
+  amount: 1
+  due_amount: 1
+  type: 
+  partner_id: 
+  ref_number: MyString
+  info: MyText
