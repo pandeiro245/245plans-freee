@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2015-07-24
+  amount: 1
+  due_amount: 1
+  balance: 1
+  entry_side: MyString
+  walletable_type: MyString
+  walletable_id: 
+  description: MyString
+
+two:
+  date: 2015-07-24
+  amount: 1
+  due_amount: 1
+  balance: 1
+  entry_side: MyString
+  walletable_type: MyString
+  walletable_id: 
+  description: MyString
