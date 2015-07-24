@@ -1,0 +1,34 @@
+%h1="#{@month.first_date.year}年#{@month.first_date.month}月"
+
+%h2="残高#{nwd(@month.balance)}円"
+
+%h2="入金#{nwd(@month.income)}円"
+%table.table.table-bordered
+  %tr
+    %th deal.id
+    %th=t(:issue_date)
+    %th=t(:due_date)
+    %th パートナー名
+    %th=t(:amount)
+
+  - @month.incomes.each do |deal|
+    %tr
+      %td= deal.id
+      %td= deal.issue_date
+      %td= deal.due_date
+      %td
+        - if deal.partner.present?
+          = link_to deal.partner_name, partner_path(deal.partner)
+        - else
+          = deal.partner_name
+      %td= nwd deal.amount
+
+
+%h2="出金#{nwd(@month.expense)}円"
+%table.table.table-bordered
+  - @month.expenses.each do |deal|
+    %tr
+      %td= freee_details deal.details
+      %td= nwd deal.amount
+
+
