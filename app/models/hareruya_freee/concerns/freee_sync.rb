@@ -17,9 +17,8 @@ module HareruyaFreee
         end
 
         def items offset = 0
-          company_id = ENV['FREEE_COMPANY_ID']
           HareruyaFreee::Freee.fetch(self, {
-            company_id: company_id,
+            company_id: HareruyaFreee::Freee.company_id,
             offset: offset
           })
         end
