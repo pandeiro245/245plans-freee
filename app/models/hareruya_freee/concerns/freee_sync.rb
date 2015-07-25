@@ -23,24 +23,23 @@ module HareruyaFreee
           })
         end
 
-        def import item
-          item2 = self.find_or_create_by(
-            id: item['id']
+        def import raw_data
+          instance = self.find_or_create_by(
+            id: raw_data['id']
           )
           params = {}
           self.column_names.each do |param|
+            raise params.inspect
             unless [:created_at, :updated_at].include?(param.to_sym)
               if param.match(/^hareruya_freee_/)
-                val = item[param.gsub(/^hareruya_freee_/, '')]
+                val = raw_data[param.gsub(/^hareruya_freee_/, '')]
               else
-                val = item[param]
+                val = raw_data[param]
               end
-              puts "key is #{param}"
-              puts "val is #{val}"
               params[param.to_sym] = val
             end
           end
-          item2.update(
+          instance.update(
             params
           )
         end

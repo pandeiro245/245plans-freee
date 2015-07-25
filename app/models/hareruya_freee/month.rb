@@ -12,8 +12,20 @@ module HareruyaFreee
       Deal.where(type: 'expense', issue_date: first_date..last_date)
     end
 
-    def income
-      cols && cols[:income] ? cols[:income] : nil
+    def income refresh = false
+      if !refresh && cols && cols[:income]
+        cols[:income]
+      else
+        self.cols ||= {}
+        if !this_month? && future?
+          res = Secretdata.incomes.values
+        else
+          res = incomes.map{|d| d.amount }
+        end
+        self.cols[:income] = res.reduce(:+) || 0
+        self.save!
+        self.cols[:income]
+      end
     end
 
     def expense
@@ -49,13 +61,8 @@ module HareruyaFreee
     def self.sync
       self.order('first_date asc').each do |month|
         cols = {}
-        cols[:income] = month.incomes.map{|d| d.amount }.reduce(:+) 
-        cols[:income] ||= 0
-        cols[:income] += Secretdata.incomes.values.reduce(:+) if month.future?
-
-        cols[:expense] = month.expenses.map{|d| d.amount }.reduce(:+)
-        cols[:expense] ||= 0
-        cols[:expense] += Secretdata.expenses.reduce(:+) if month.future?
+        cols[:income] = (month.future? ? Secretdata.incomes.values : month.incomes.map{|d| d.amount }).reduce(:+) || 0
+        cols[:expense] = (month.future? ? Secretdata.expenses : month.expenses.map{|d| d.amount }).reduce(:+) || 0
 
         #cols[:profit] = month.profit
         cols[:profit] = (cols[:income] || 0 ) - (cols[:expense] || 0)

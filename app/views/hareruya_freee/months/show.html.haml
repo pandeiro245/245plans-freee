@@ -2,7 +2,7 @@
 
 %h2="残高#{nwd(@month.balance)}円"
 
-%h2="入金#{nwd(@month.income)}円"
+%h2="入金#{nwd(@month.income(true))}円"
 %table.table.table-bordered
   %tr
     %th deal.id
