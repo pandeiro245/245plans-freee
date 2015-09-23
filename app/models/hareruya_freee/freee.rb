@@ -6,6 +6,11 @@ module HareruyaFreee
       end
     end
 
+    def self.company_id
+      self.freee.get(
+        '/api/1/users/me?companies=true'
+      ).parsed['user']['companies'].first['id'].to_i
+    end
 
     def self.check(model, params=[])
       plural = model.to_s.split('::').last.underscore.pluralize
