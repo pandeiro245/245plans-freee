@@ -1,5 +1,12 @@
 module HareruyaFreee
-  class Freee
+  class Freee 
+    def self.sync
+      %w(account_item partner bank walletable wallet_txn deal).each do |name|
+        "HareruyaFreee::#{name.camelcase}".constantize.sync
+      end
+    end
+
+
     def self.check(model, params=[])
       plural = model.to_s.split('::').last.underscore.pluralize
       url = "/api/1/#{plural}.json?limit=100"

@@ -30,7 +30,6 @@ module HareruyaFreee
           )
           params = {}
           self.column_names.each do |param|
-            raise params.inspect
             unless [:created_at, :updated_at].include?(param.to_sym)
               if param.match(/^hareruya_freee_/)
                 val = raw_data[param.gsub(/^hareruya_freee_/, '')]

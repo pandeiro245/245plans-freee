@@ -8,7 +8,7 @@ module HareruyaFreee
 
     def callback
       Freee.freee(params[:code])
-      redirect_to '/freee/partners'
+      redirect_to '/freee'
     end
   end
 end

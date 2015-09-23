@@ -1,15 +1,11 @@
 module HareruyaFreee
   class Month < ::Month
     def incomes
-      if future?
-        Deal.where(type: 'income', due_date: first_date..last_date) 
-      else
-        Deal.where(type: 'income', issue_date: first_date..last_date)
-      end
+      WalletTxn.where(entry_side: 'income', date: first_date..last_date)
     end
 
     def expenses
-      Deal.where(type: 'expense', issue_date: first_date..last_date)
+      WalletTxn.where(entry_side: 'expense', date: first_date..last_date)
     end
 
     def income refresh = false
@@ -33,28 +29,23 @@ module HareruyaFreee
     end
 
     def balance
-      cols && cols[:balance] ? cols[:balance] : nil
+      res = [4409, 4411].map{|walletable_id|  # SBIと三井住友
+        WalletTxn.where(entry_side: 'expense', date: first_date..last_date, hareruya_freee_walletable_id: walletable_id).last.balance
+      }.reduce(:+)
+      self.cols[:balance] = res
+      self.save!
+      res
     end
 
     def profit
       (income || 0 ) - (expense || 0)
     end
 
-    def fetch_by_walletable_id id
-      target = WalletTxn.where(
-        hareruya_freee_walletable_id: id,
-        date: first_date..last_date,
-      ).order('date desc').first
-      target ? target.balance.to_i : 0
-    end
-
     def fetch_balance
       if future?
         prev.balance + profit
       else
-        [4409, 4411].map{|id|
-          fetch_by_walletable_id(id)
-        }.reduce(:+)
+        balance
       end
     end
 
