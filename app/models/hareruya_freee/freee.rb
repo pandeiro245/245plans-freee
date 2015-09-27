@@ -1,7 +1,7 @@
 module HareruyaFreee
   class Freee 
     def self.sync
-      %w(account_item partner bank walletable wallet_txn deal).each do |name|
+      %w(account_item partner bank walletable wallet_txn transfer deal).each do |name|
         "HareruyaFreee::#{name.camelcase}".constantize.sync
       end
     end

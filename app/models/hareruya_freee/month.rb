@@ -50,7 +50,7 @@ module HareruyaFreee
         if !this_month? && future?
           res = Secretdata.incomes.values
         else
-          res = incomes.map{|d| d.amount }
+          res = incomes.select{|txn| !txn.description.match(/振込＊ニシコクラヒロノブ/)}.select{|txn| !txn.description.match(/ラフノート/)}.map{|d| d.amount }
         end
         self.cols[:income] = res.reduce(:+) || 0
         self.save!
@@ -66,7 +66,7 @@ module HareruyaFreee
         if !this_month? && future?
           res = Secretdata.expenses.values
         else
-          res = expenses.map{|d| d.amount }
+          res = expenses.select{|txn| !txn.description.match(/振込＊ニシコクラヒロノブ/)}.select{|txn| !txn.description.match(/ラフノート/)}..map{|d| d.amount }
         end
         self.cols[:expense] = res.reduce(:+) || 0
         self.save!

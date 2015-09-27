@@ -2,6 +2,7 @@
   %tr
     %th 年
     %th 月
+    %th memo
     - Plan.cols.each do |col| 
       %th=col
   - @plan.months.each do |month|
@@ -22,10 +23,12 @@
                 %td=nwd month.year.cols[col]
       %td
         = link_to month.first_date.month, month_path(month)
+      %td
+        = month.memo
       - Plan.cols.each do |col|
         - val = month.cols[col]
         - style = val && val < 0 ? 'background: #fc0' : ''
         %td{style: style}
-          =nwd month.cols[col]
+          = nwd month.cols[col]
 
 

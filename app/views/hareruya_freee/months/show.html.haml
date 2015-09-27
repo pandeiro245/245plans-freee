@@ -1,7 +1,7 @@
 %h1="#{@month.first_date.year}年#{@month.first_date.month}月"
 
-%h2="入金#{nwd(@month.income(true))}円"
-%h2="出金#{nwd(@month.expense)}円"
+%h2="入金#{nwd(@month.income(true))}円（口座移動は無視）"
+%h2="出金#{nwd(@month.expense)}円（口座移動は無視）"
 
 %h2="収支#{nwd(@month.profit)}円（SBIのみで計算）"
 %h2="残高#{nwd(@month.balance)}円（SBI+三井住友。みずほと現金は含まず）"
@@ -39,8 +39,8 @@
         %td
           = nwd txn.amt
         %td= nwd txn.balance
-  - groups.each do |desc, amt|
-    = "#{desc}: #{amt}"
+  - groups.to_a.sort{|a, b| b.last <=> a.last}.each do |group|
+    = "#{group.first}: #{group.last}"
     %br
     
 
