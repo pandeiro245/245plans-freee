@@ -10,6 +10,7 @@ module HareruyaFreee
     def refresh!
       self.income(true)
       self.expense(true)
+      self.profit(true)
       self.balance
     end
 
@@ -19,6 +20,26 @@ module HareruyaFreee
 
     def expenses
       WalletTxn.where(entry_side: 'expense', date: first_date..last_date)
+    end
+
+    def profit refresh = false
+      #(income || 0 ) - (expense || 0)
+      return self.cols[:profit] unless refresh
+      if future?
+        if prev
+          res = prev.profit || 0
+        else
+          res = 0
+        end
+      else
+        res = WalletTxn.where(
+          date: first_date..last_date,
+          hareruya_freee_walletable_id: 4409 #SBI
+        ).map{|w|w.amt}.reduce(:+) || 0
+      end
+      self.cols[:profit] = res
+      self.save!
+      res
     end
 
     def income refresh = false
@@ -56,7 +77,7 @@ module HareruyaFreee
     def balance
       if future?
         if prev
-          res = prev.balance + profit
+          res = (prev.balance || 0) + profit
         else
           res = 0
         end
@@ -72,19 +93,13 @@ module HareruyaFreee
       res
     end
 
-    def profit
-      (income || 0 ) - (expense || 0)
-    end
-
     def self.sync
       self.order('first_date asc').each do |month|
         cols = {}
         cols[:income] = (month.future? ? Secretdata.incomes.values : month.incomes.map{|d| d.amount }).reduce(:+) || 0
         cols[:expense] = (month.future? ? Secretdata.expenses : month.expenses.map{|d| d.amount }).reduce(:+) || 0
 
-        #cols[:profit] = month.profit
-        cols[:profit] = (cols[:income] || 0 ) - (cols[:expense] || 0)
-
+        cols[:profit] = month.profit
         cols[:profit] = cols[:income] - cols[:expense] if month.future?
         cols[:balance] = month.balance
 

@@ -2,11 +2,22 @@
 
 %h2="入金#{nwd(@month.income(true))}円"
 %h2="出金#{nwd(@month.expense)}円"
+
+%h2="収支#{nwd(@month.profit)}円（SBIのみで計算）"
 %h2="残高#{nwd(@month.balance)}円（SBI+三井住友。みずほと現金は含まず）"
 
-
 - HareruyaFreee::Walletable.actives.each do |walletable|
-  %h2=walletable.name
+  - groups = {}
+  - txns = HareruyaFreee::WalletTxn.where(hareruya_freee_walletable_id: walletable.id).where("date <= ?", @month.last_date).where("date > ?", @month.first_date)
+  %h2
+    =walletable.name
+    ="(#{nwd txns.map{|t| t.amt}.reduce(:+)}円)"
+  売上：
+  ="#{nwd txns.select{|t| t.entry_side == 'income'}.map{|t| t.amt}.reduce(:+)}円"
+  %br
+  経費：
+  ="#{nwd txns.select{|t| t.entry_side == 'expense'}.map{|t| t.amt}.reduce(:+)}円"
+  %br
   %table.table.table-bordered
     %tr
       %th wallet_txn.id
@@ -15,45 +26,21 @@
       %th entry_side
       %th=t(:amount)
       %th 残高
-    - HareruyaFreee::WalletTxn.where(hareruya_freee_walletable_id: walletable.id).where("date <= ?", @month.last_date).where("date > ?", @month.first_date).each do |txn|
+    - txns.each do |txn|
+      - groups[txn.description] ||= 0
+      - groups[txn.description] += txn.amt
       %tr
         %td= txn.id
         %td= txn.date
-        %td= txn.description
+        %td
+          = txn.description
+          = "(みずほ銀行で社会保険)" if txn.description.match(/振込＊ラフノート（カ/)
         %td= nwd txn.entry_side
         %td
-          = '-' if txn.entry_side == 'expense'
-          = nwd txn.amount
+          = nwd txn.amt
         %td= nwd txn.balance
-
-- if false
-  %h2="入金#{nwd(@month.income(true))}円"
-  %table.table.table-bordered
-    %tr
-      %th deal.id
-      %th=t(:issue_date)
-      %th=t(:due_date)
-      %th パートナー名
-      %th=t(:amount)
-
-    - @month.incomes.each do |deal|
-      %tr
-        %td= deal.id
-        %td= deal.issue_date
-        %td= deal.due_date
-        %td
-          - if deal.partner.present?
-            = link_to deal.partner_name, partner_path(deal.partner)
-          - else
-            = deal.partner_name
-        %td= nwd deal.amount
-
-
-  %h2="出金#{nwd(@month.expense)}円"
-  %table.table.table-bordered
-    - @month.expenses.each do |deal|
-      %tr
-        %td= freee_details deal.details
-        %td= nwd deal.amount
-
+  - groups.each do |desc, amt|
+    = "#{desc}: #{amt}"
+    %br
+    
 
