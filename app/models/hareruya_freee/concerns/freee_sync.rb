@@ -43,6 +43,9 @@ module HareruyaFreee
             key = param.gsub(/^hareruya_freee_/, '')
             unless [:created_at, :updated_at].include?(param.to_sym)
               val = raw_data[key]
+              unless self.column_names.include?(key.to_s)
+                key = "hareruya_freee_#{key}"
+              end
               params[key.to_sym] = val
               puts "key is #{key}"
               puts "val is #{val}"
