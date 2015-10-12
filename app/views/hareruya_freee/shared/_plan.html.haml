@@ -5,30 +5,36 @@
     %th memo
     - Plan.cols.each do |col| 
       %th=col
-  - @plan.months.each do |month|
+  - @plan.years.each do |year|
+    - next unless year.months.present?
     %tr
-      - if month.month == 3
-        %td{rowspan: 12}
-          %h2
-            = month.nendo.year
-          %br
-          %br
-          = month.nendo.memo
-          %table.table.table-bordered
-            %tr
-              - Plan.cols.each do |col| 
-                %th=col
-            %tr
-              - Plan.cols.each do |col|
-                %td=nwd month.year.cols[col]
-      %td
-        = link_to month.first_date.month, month_path(month)
-      %td
-        = month.memo
-      - Plan.cols.each do |col|
-        - val = month.cols[col]
-        - style = val && val < 0 ? 'background: #fc0' : ''
-        %td{style: style}
-          = nwd month.cols[col]
+      %td{rowspan: 13}
+        %h2
+          = year.year
+        %br
+        %br
+        = year.memo
+        %table.table.table-bordered
+          %tr
+            - Plan.cols.each do |col| 
+              %th=col
+          %tr
+            - Plan.cols.each do |col|
+              %td
+                - begin
+                  =nwd year.cols[col]
+                - rescue
+
+      - year.months.each do |month|
+        %tr
+          %td
+            = link_to month.first_date.month, month_path(month)
+          %td
+            = month.memo
+          - Plan.cols.each do |col|
+            - val = month.cols[col]
+            - style = val && val < 0 ? 'background: #fc0' : ''
+            %td{style: style}
+              = nwd month.cols[col]
 
 

@@ -97,7 +97,7 @@ module HareruyaFreee
       self.order('first_date asc').each do |month|
         cols = {}
         cols[:income] = (month.future? ? Secretdata.incomes.values : month.incomes.map{|d| d.amount }).reduce(:+) || 0
-        cols[:expense] = (month.future? ? Secretdata.expenses : month.expenses.map{|d| d.amount }).reduce(:+) || 0
+        cols[:expense] = (month.future? ? Secretdata.expenses.values : month.expenses.map{|d| d.amount }).reduce(:+) || 0
 
         cols[:profit] = month.profit
         cols[:profit] = cols[:income] - cols[:expense] if month.future?
